@@ -34,5 +34,7 @@ On IntelliJ IDEA:
   - `VM options`: `-XmsMG -XmxNG -XX:UserG1GC` where `M` is the starting amount of RAM and `N` the maximum given to the server
   - `Program arguments`: `nogui`
   - `JRE`: `1.8`
+  - In `Before launch` hit the `+`, select `Build Artifacts`, check `MGManager` and hit `OK`
+- Hit `OK`
 > This configuration allows you to easily run the server from IntelliJ IDEA
   
