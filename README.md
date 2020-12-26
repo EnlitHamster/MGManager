@@ -3,7 +3,7 @@ Stand-alone framework to create Minecraft Minigames plugins (Java 1.8)
 
 ## Workspace setup
 
-This guide was made for IntelliJ IDEA Ultimate. It should still work on the Community version. For other IDEs, use google. The devs do not take responsibility for any faulty setup you prepare on your own.
+This guide was made for [IntelliJ IDEA Ultimate](https://www.jetbrains.com/idea/download/#section=windows). It should still work on the Community version. For other IDEs, use google. The devs do not take responsibility for any faulty setup you prepare on your own.
 
 ### Downloading the source
 
