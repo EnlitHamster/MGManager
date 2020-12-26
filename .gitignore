@@ -1,12 +1,24 @@
 # User-specific stuff
-.idea/
-
 *.iml
 *.ipr
 *.iws
 
 # IntelliJ
 out/
+
+# Default ignored files
+.idea/shelf/
+.idea/workspace.xml
+.idea/dataSources.local.xml
+# Editor-based HTTP Client requests
+.idea/httpRequests/
+# Client specific files
+.idea/usage.statistics.xml
+.idea/tasks.xml
+.idea/modules.xml
+.idea/libraries
+.idea/artifacts
+
 
 # Compiled class file
 *.class
