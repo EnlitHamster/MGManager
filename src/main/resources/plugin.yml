@@ -1,0 +1,8 @@
+name: MGManager
+version: ${project.version}
+main: io.github.enlithamster.mgmanager.MGManager
+api-version: 1.16
+prefix: MGM
+authors: [EnlitHamster]
+description: Stand-alone framework to create Minecraft Minigames plugins
+website: enlithamster.github.io
