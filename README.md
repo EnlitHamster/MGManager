@@ -31,7 +31,7 @@ On IntelliJ IDEA:
 - Hit the `+` button and select `JAR Application`
 - In the configuration window set the values as follows:
   - `Path to JAR`: `root/spigot-1.16.4.jar` (or whatever your spigot JAR file is called)
-  - `VM options`: `-XmsMG -XmxNG -XX:UserG1GC` where `M` is the starting amount of RAM and `N` the maximum given to the server
+  - `VM options`: `-XmsMG -XmxNG -XX:UseG1GC` where `M` is the starting amount of RAM and `N` the maximum given to the server
   - `Program arguments`: `nogui`
   - `JRE`: `1.8`
   - In `Before launch` hit the `+`, select `Build Artifacts`, check `MGManager` and hit `OK`
