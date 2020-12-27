@@ -1,5 +1,6 @@
 package io.github.enlithamster.mgmanager.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,7 +24,18 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
      * to a specific usage of the tool to avoid monoliths. Directives can be overloaded, but
      * registering order defines priority. MGManager directives take priority.
      */
-    public interface MGMDirective {
+    public static abstract class MGMDirective {
+
+        public final String plugin;
+
+        /**
+         * The directive must define which plugin it refers to.
+         *
+         * @param plugin Plugin name
+         */
+        protected MGMDirective(String plugin) {
+            this.plugin = plugin;
+        }
 
         /**
          * The implementation of the directive. It fits the <code>onCommand</code> signature. Return
@@ -38,7 +50,26 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
          *
          * @return true if a valid command, otherwise false
          */
-        boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
+        protected abstract boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
+
+        /**
+         * The help entry of the directive. This is called whenever a user types <code>/[command] help [directive]</code>
+         * in order to inform the user of proper usage.
+         *
+         * @param sender Source of the command
+         * @param command Command which was executed
+         * @param label Alias of the command which was used
+         * @param args Passed command arguments
+         */
+        protected abstract void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
+
+        /**
+         * The function generates a String version of the command prototype to be shown when multiple executors are
+         * registered for one directive in the <code>help</code> section of the command.
+         *
+         * @return command prototype
+         */
+        protected abstract String prototype();
 
     }
 
@@ -55,9 +86,9 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
      */
     public void registerDirectiveExecutor(@NotNull String strDirective, @NotNull MGMDirective executor) {
         String directive = strDirective.toLowerCase();
-        if (!directives.containsKey(directive))
-            directives.put(directive, new ArrayList<>());
-        directives.get(directive).add(executor);
+        if (!this.directives.containsKey(directive))
+            this.directives.put(directive, new ArrayList<>());
+        this.directives.get(directive).add(executor);
     }
 
     /**
@@ -70,8 +101,12 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
      */
     public boolean unregisterDirectiveExecutor(@NotNull String strDirective, @NotNull MGMDirective executor) {
         String directive = strDirective.toLowerCase();
-        if (directives.containsKey(directive))
-            return directives.get(directive).remove(executor);
+        if (this.directives.containsKey(directive)) {
+            boolean ret = this.directives.get(directive).remove(executor);
+            if (this.directives.get(directive).size() == 0)
+                this.directives.remove(directive);
+            return ret;
+        }
         return false;
     }
 
@@ -92,6 +127,7 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
 
     /**
      * Dispatch logic of the Command executor. <code>args</code> is passed without the first element (the directive).
+     * It also implements the help functionality.
      *
      * @param sender Source of the command
      * @param command Command which was executed
@@ -101,16 +137,39 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
      * @return true if a valid command, otherwise false
      */
     protected final boolean dispatch(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 0)
-            return this.usage();
-        else {
+        if (args.length == 0 || (args.length == 1 && args[0].equalsIgnoreCase("help")))
+            return this.usage(sender, command, label, args);
+        else if (args[0].equalsIgnoreCase("help")) {
+            String directive = args[1].toLowerCase();
+            if (this.directives.containsKey(directive)) {
+                ArrayList<MGMDirective> executors = this.directives.get(directive);
+                int nExecutors = executors.size();
+                if (nExecutors == 1) {
+                    executors.get(0).usage(sender, command, label, Arrays.copyOfRange(args, 2, args.length));
+                } else if (args.length == 3) {
+                    try {
+                        executors.get(Integer.parseInt(args[2])).usage(sender, command, label, args);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage(ChatColor.RED + "Usage: /" + command.getName() + " help " + directive + " [number].");
+                    }
+                } else {
+                    sender.sendMessage(ChatColor.BLUE.toString() + nExecutors + " usages found.");
+                    for (int i = 0; i < nExecutors; i++) {
+                        MGMDirective exec = executors.get(i);
+                        String message = "[" + i + "] " + exec.plugin + ": " + exec.prototype();
+                        sender.sendMessage(ChatColor.GREEN + message);
+                    }
+                }
+            } else
+                sender.sendMessage(ChatColor.RED + "No \"" + directive + "\" directive found.");
+
+            return true;
+        } else {
             String directive = args[0].toLowerCase();
-            if (directives.containsKey(directive)) {
-                for (MGMDirective executor : directives.get(directive))
+            if (this.directives.containsKey(directive))
+                for (MGMDirective executor : this.directives.get(directive))
                     if (executor.execute(sender, command, label, Arrays.copyOfRange(args, 1, args.length)))
                         return true;
-                return false;
-            }
         }
 
         return false;
@@ -119,8 +178,22 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
     /**
      * Definition of the normal call of the command.
      *
+     * @param sender Source of the command
+     * @param command Command which was executed
+     * @param label Alias of the command which was used
+     * @param args Passed command arguments
+     *
      * @return true if a valid command, otherwise false
      */
-    protected abstract boolean usage();
+    protected abstract boolean usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
+
+    /**
+     * Returns the list of directives registered on this command.
+     *
+     * @return directives list
+     */
+    protected ArrayList<String> listDirectives() {
+        return new ArrayList<>(this.directives.keySet());
+    }
 
 }

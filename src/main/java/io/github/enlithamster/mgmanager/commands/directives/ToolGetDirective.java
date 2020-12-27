@@ -13,7 +13,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class ToolGetDirective implements MGMCommandExecutor.MGMDirective {
+public class ToolGetDirective extends MGMCommandExecutor.MGMDirective {
+
+    public ToolGetDirective() {
+        super("MGManager");
+    }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -34,6 +38,16 @@ public class ToolGetDirective implements MGMCommandExecutor.MGMDirective {
         }
 
         return false;
+    }
+
+    @Override
+    protected void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        sender.sendMessage(ChatColor.BLUE + "Gives you the MGMTool.");
+    }
+
+    @Override
+    protected String prototype() {
+        return "/mgmtool get";
     }
 
 }

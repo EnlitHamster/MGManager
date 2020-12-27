@@ -6,3 +6,9 @@ prefix: MGM
 authors: [EnlitHamster]
 description: Stand-alone framework to create Minecraft Minigames plugins
 website: enlithamster.github.io
+
+commands:
+  mgmtool:
+    permission: mgm.tool
+    usage: /[command] <directive>
+    description: Tool command for MGManager

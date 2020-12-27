@@ -4,6 +4,10 @@ import io.github.enlithamster.mgmanager.commands.directives.ToolClearDirective;
 import io.github.enlithamster.mgmanager.commands.directives.ToolGetDirective;
 import io.github.enlithamster.mgmanager.commands.directives.ToolHighlightDirective;
 import io.github.enlithamster.mgmanager.managers.ToolManager;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * These commands are only callable by a player. They are used to manipualte
@@ -21,8 +25,9 @@ public class ToolCommands extends MGMCommandExecutor {
     }
 
     @Override
-    protected boolean usage() {
-        return false;
+    protected boolean usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        sender.sendMessage(ChatColor.BLUE + "Registered directives: " + String.join(", ", this.listDirectives()));
+        return true;
     }
 
 }

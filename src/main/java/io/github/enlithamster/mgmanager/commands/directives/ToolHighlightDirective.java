@@ -15,11 +15,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class ToolHighlightDirective implements MGMCommandExecutor.MGMDirective {
+public class ToolHighlightDirective extends MGMCommandExecutor.MGMDirective {
 
     private final ToolManager toolManager;
 
     public ToolHighlightDirective(ToolManager tm) {
+        super("MGManager");
         this.toolManager = tm;
     }
 
@@ -28,29 +29,36 @@ public class ToolHighlightDirective implements MGMCommandExecutor.MGMDirective {
         if (sender instanceof Player && args.length <= 1) {
             Player user = (Player) sender;
             if (user.hasPermission("mgm.tool.highlight")) {
-                if (user.getInventory().getItemInMainHand().getType().equals(Material.IRON_HOE)) {
-                    Delimiter delimiter = this.toolManager.getAreaDelimiter(user);
-                    if (delimiter.isDefined()) {
-                        Location loc1 = delimiter.getLoc1();
-                        Location loc2 = delimiter.getLoc2();
-                        Material mat = (args.length == 1 ? Material.getMaterial(args[0]) : Material.BLUE_WOOL);
+                Delimiter delimiter = this.toolManager.getAreaDelimiter(user);
+                if (delimiter.isDefined()) {
+                    Location loc1 = delimiter.getLoc1();
+                    Location loc2 = delimiter.getLoc2();
+                    Material mat = (args.length == 1 ? Material.getMaterial(args[0]) : Material.BLUE_WOOL);
 
-                        if (mat == null)
-                            user.sendMessage(ChatColor.RED + "Material \"" + args[0] + "\" does not exist.");
-                        else {
-                            drawArena(loc1, loc2, Math.max(loc1.getBlockY(), loc2.getBlockY()), mat);
-                            user.sendMessage(ChatColor.GREEN + "Area highlighted.");
-                        }
+                    if (mat == null)
+                        user.sendMessage(ChatColor.RED + "Material \"" + args[0] + "\" does not exist.");
+                    else {
+                        drawArena(loc1, loc2, Math.max(loc1.getBlockY(), loc2.getBlockY()), mat);
+                        user.sendMessage(ChatColor.GREEN + "Area highlighted.");
+                    }
 
-                        return true;
-                    } else
-                        user.sendMessage(ChatColor.RED + "Define a region first.");
+                    return true;
                 } else
-                    user.sendMessage(ChatColor.RED + "You must hold the MGM tool for which you want the area highlight.");
+                    user.sendMessage(ChatColor.RED + "Define a region first.");
             }
         }
 
         return false;
+    }
+
+    @Override
+    protected void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        sender.sendMessage(ChatColor.BLUE + "Creates an highlighted area using either blue wool or the given material at the maximum height of the area.");
+    }
+
+    @Override
+    protected String prototype() {
+        return "/mgmtool highlight <material>";
     }
 
     private static void drawArena(Location loc1, Location loc2, int y, Material material) {
