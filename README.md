@@ -1,6 +1,11 @@
 # MGManager
 Stand-alone framework to create Minecraft Minigames plugins (Java 1.8)
 
+## Implemented Features
+
+- `CommandExecutor` extended version with directives register with support for multiple listeners per directives.
+- MGMTool basic implementaiton with area seleciton, highlighting and clearing.
+
 ## Workspace setup
 
 This guide was made for [IntelliJ IDEA Ultimate](https://www.jetbrains.com/idea/download/#section=windows). It should still work on the Community version. For other IDEs, use google. The devs do not take responsibility for any faulty setup you prepare on your own.
