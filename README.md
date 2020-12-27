@@ -38,3 +38,6 @@ On IntelliJ IDEA:
 - Hit `OK`
 > This configuration allows you to easily run the server from IntelliJ IDEA
   
+## Contributions
+
+Please refer to [`CONTRIBUTION.md`]() to know how you can contribute to this project. Any contributions that do not follow the given guidelines will not be taken into consideration.
