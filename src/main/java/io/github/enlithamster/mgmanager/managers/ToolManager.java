@@ -4,7 +4,7 @@ import io.github.enlithamster.mgmanager.MGManager;
 import io.github.enlithamster.mgmanager.commands.ToolCommands;
 import io.github.enlithamster.mgmanager.handlers.ToolHandler;
 import io.github.enlithamster.mgmanager.exceptions.DifferentWorldsException;
-import io.github.enlithamster.mgmanager.managers.tools.Delimiter;
+import io.github.enlithamster.mgmanager.tool.Delimiter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

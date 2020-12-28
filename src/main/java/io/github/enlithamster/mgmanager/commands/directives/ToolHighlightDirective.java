@@ -3,7 +3,7 @@ package io.github.enlithamster.mgmanager.commands.directives;
 import io.github.enlithamster.mgmanager.Utils;
 import io.github.enlithamster.mgmanager.commands.MGMCommandExecutor;
 import io.github.enlithamster.mgmanager.managers.ToolManager;
-import io.github.enlithamster.mgmanager.managers.tools.Delimiter;
+import io.github.enlithamster.mgmanager.tool.Delimiter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
