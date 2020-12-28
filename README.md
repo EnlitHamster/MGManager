@@ -22,7 +22,7 @@ The repo contains already a `.iml` file that is the project file for IntelliJ. O
 
 ### Setting up testing server
 
-If you want to make the dev & test flow smoother, we suggest you take the time to follow the steps below. To setup the server, follow [this](https://minecraft.gamepedia.com/Tutorials/Setting_up_a_Spigot_server) guide. The folder in which you install the server will from now be called `root`.
+If you want to make the dev & test flow smoother, we suggest you take the time to follow the steps below. To setup the server, follow [this](https://www.spigotmc.org/wiki/buildtools/) guide. The folder in which you install the server will from now be called `root`.
 
 On IntelliJ IDEA:
 - Select `File -> Project Structure...`
