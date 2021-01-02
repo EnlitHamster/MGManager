@@ -24,10 +24,4 @@ public class ToolCommands extends MGMCommandExecutor {
         this.registerDirectiveExecutor("highlight", new ToolHighlightDirective(tm));
     }
 
-    @Override
-    protected boolean usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        sender.sendMessage(ChatColor.BLUE + "Registered directives: " + String.join(", ", this.listDirectives()));
-        return true;
-    }
-
 }

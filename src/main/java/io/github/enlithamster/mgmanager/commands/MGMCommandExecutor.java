@@ -185,7 +185,10 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
      *
      * @return true if a valid command, otherwise false
      */
-    protected abstract boolean usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
+    protected boolean usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        sender.sendMessage(ChatColor.BLUE + "Registered directives: " + String.join(", ", this.listDirectives()));
+        return true;
+    }
 
     /**
      * Returns the list of directives registered on this command.
