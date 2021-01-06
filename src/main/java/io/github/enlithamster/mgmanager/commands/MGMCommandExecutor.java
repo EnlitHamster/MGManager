@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public abstract class MGMCommandExecutor implements CommandExecutor {
 
@@ -162,17 +163,24 @@ public abstract class MGMCommandExecutor implements CommandExecutor {
                 }
             } else
                 sender.sendMessage(ChatColor.RED + "No \"" + directive + "\" directive found.");
-
-            return true;
         } else {
             String directive = args[0].toLowerCase();
-            if (this.directives.containsKey(directive))
-                for (MGMDirective executor : this.directives.get(directive))
-                    if (executor.execute(sender, command, label, Arrays.copyOfRange(args, 1, args.length)))
-                        return true;
+            if (this.directives.containsKey(directive)) {
+                Iterator<MGMDirective> executor = this.directives.get(directive).iterator();
+                boolean correctDirective = false;
+                // Base case: iterator = the first element of the ArrayList.
+                // The iterator calls the next() function at every cycle, which moves the
+                // iterator forward, guaranteeing the termination of the loop.
+                while (executor.hasNext() && !correctDirective)
+                    correctDirective = executor.next().execute(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+
+                if (!correctDirective)
+                    sender.sendMessage(ChatColor.RED + "No directive found that could handle this commnad");
+            }
         }
 
-        return false;
+        // The false case is handled through the usage methods and is not left to the Spigot framework
+        return true;
     }
 
     /**
