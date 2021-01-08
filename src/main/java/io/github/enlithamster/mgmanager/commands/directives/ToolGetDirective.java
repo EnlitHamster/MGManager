@@ -1,7 +1,7 @@
 package io.github.enlithamster.mgmanager.commands.directives;
 
 import io.github.enlithamster.mgmanager.Utils;
-import io.github.enlithamster.mgmanager.commands.MGMCommandExecutor;
+import io.github.enlithamster.mgmanager.commands.MGMDirective;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class ToolGetDirective extends MGMCommandExecutor.MGMDirective {
+public class ToolGetDirective extends MGMDirective {
 
     public ToolGetDirective() {
         super("MGManager");

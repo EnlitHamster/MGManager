@@ -2,6 +2,9 @@ package io.github.enlithamster.mgmanager.managers;
 
 import io.github.enlithamster.mgmanager.MGManager;
 import io.github.enlithamster.mgmanager.commands.ToolCommands;
+import io.github.enlithamster.mgmanager.commands.directives.ToolClearDirective;
+import io.github.enlithamster.mgmanager.commands.directives.ToolGetDirective;
+import io.github.enlithamster.mgmanager.commands.directives.ToolHighlightDirective;
 import io.github.enlithamster.mgmanager.handlers.ToolHandler;
 import io.github.enlithamster.mgmanager.exceptions.DifferentWorldsException;
 import io.github.enlithamster.mgmanager.tool.Delimiter;
@@ -22,7 +25,7 @@ public class ToolManager {
     private final ToolCommands toolCmd;
 
     // Handlers
-    private final ToolHandler arenaToolHandler;
+    private final ToolHandler toolHandler;
 
     public ToolManager(@NotNull MGManager mgm) {
         this.mgm = mgm;
@@ -31,12 +34,17 @@ public class ToolManager {
         this.playerAreaDelimiters = new HashMap<>();
 
         // --- Initializing components
-        this.toolCmd = new ToolCommands(this);
-        this.arenaToolHandler = new ToolHandler(this);
+        this.toolCmd = new ToolCommands();
+        this.toolHandler = new ToolHandler(this);
 
-        // --- Registrations
+        // --- Registering command directives
+        this.toolCmd.registerDirectiveExecutor("get", new ToolGetDirective());
+        this.toolCmd.registerDirectiveExecutor("clear", new ToolClearDirective(this));
+        this.toolCmd.registerDirectiveExecutor("highlight", new ToolHighlightDirective(this));
+
+        // --- Registering handlers & executors
         Objects.requireNonNull(this.mgm.getCommand("mgmtool")).setExecutor(this.toolCmd);
-        this.mgm.getServer().getPluginManager().registerEvents(this.arenaToolHandler, this.mgm);
+        this.mgm.getServer().getPluginManager().registerEvents(this.toolHandler, this.mgm);
     }
 
     public void setPlayerDelimiterLocation1(@NotNull Player user, @NotNull Location loc1) throws DifferentWorldsException {

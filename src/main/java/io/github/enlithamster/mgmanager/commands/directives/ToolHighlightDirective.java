@@ -1,7 +1,7 @@
 package io.github.enlithamster.mgmanager.commands.directives;
 
 import io.github.enlithamster.mgmanager.Utils;
-import io.github.enlithamster.mgmanager.commands.MGMCommandExecutor;
+import io.github.enlithamster.mgmanager.commands.MGMDirective;
 import io.github.enlithamster.mgmanager.managers.ToolManager;
 import io.github.enlithamster.mgmanager.tool.Delimiter;
 import org.bukkit.ChatColor;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class ToolHighlightDirective extends MGMCommandExecutor.MGMDirective {
+public class ToolHighlightDirective extends MGMDirective {
 
     private final ToolManager toolManager;
 

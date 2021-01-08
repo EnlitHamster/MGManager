@@ -1,15 +1,14 @@
 package io.github.enlithamster.mgmanager.commands.directives;
 
-import io.github.enlithamster.mgmanager.commands.MGMCommandExecutor;
+import io.github.enlithamster.mgmanager.commands.MGMDirective;
 import io.github.enlithamster.mgmanager.managers.ToolManager;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ToolClearDirective extends MGMCommandExecutor.MGMDirective {
+public class ToolClearDirective extends MGMDirective {
 
     private final ToolManager toolManager;
 
