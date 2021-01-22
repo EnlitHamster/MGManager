@@ -6,8 +6,8 @@ public class SimpleArena extends MGMArena {
 
     private Delimiter area;
 
-    public SimpleArena(Delimiter area) {
-        super();
+    public SimpleArena(String name, Delimiter area) {
+        super(name);
         this.area = area;
     }
 
