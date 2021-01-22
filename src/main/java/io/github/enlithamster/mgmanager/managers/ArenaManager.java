@@ -33,7 +33,7 @@ public class ArenaManager {
 
         // --- Registering command directives
         this.arenaCmd.registerDirectiveExecutor("create", new ArenaCreateDirective(this.mgm));
-        this.arenaCmd.registerDirectiveExecutor("list", new ArenaListDirective(this));
+        this.arenaCmd.registerDirectiveExecutor("list", new ArenaListDirective(this.mgm));
 
         // --- Registering handlers & executors
         Objects.requireNonNull(this.mgm.getCommand("mgmarena")).setExecutor(this.arenaCmd);
@@ -41,7 +41,7 @@ public class ArenaManager {
 
     public boolean createArena(String name, Delimiter area) {
         if (area != null && !this.arenas.containsKey(name)) {
-            this.arenas.put(name, new SimpleArena(area));
+            this.arenas.put(name, new SimpleArena(name, area));
             return true;
         }
 

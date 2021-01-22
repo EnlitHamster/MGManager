@@ -38,9 +38,9 @@ public class ToolManager {
         this.toolHandler = new ToolHandler(this);
 
         // --- Registering command directives
-        this.toolCmd.registerDirectiveExecutor("get", new ToolGetDirective());
-        this.toolCmd.registerDirectiveExecutor("clear", new ToolClearDirective(this));
-        this.toolCmd.registerDirectiveExecutor("highlight", new ToolHighlightDirective(this));
+        this.toolCmd.registerDirectiveExecutor("get", new ToolGetDirective(this.mgm));
+        this.toolCmd.registerDirectiveExecutor("clear", new ToolClearDirective(this.mgm));
+        this.toolCmd.registerDirectiveExecutor("highlight", new ToolHighlightDirective(this.mgm));
 
         // --- Registering handlers & executors
         Objects.requireNonNull(this.mgm.getCommand("mgmtool")).setExecutor(this.toolCmd);

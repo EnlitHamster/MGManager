@@ -1,5 +1,6 @@
 package io.github.enlithamster.mgmanager.commands.directives;
 
+import io.github.enlithamster.mgmanager.MGManager;
 import io.github.enlithamster.mgmanager.Utils;
 import io.github.enlithamster.mgmanager.commands.MGMDirective;
 import org.bukkit.ChatColor;
@@ -13,10 +14,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class ToolGetDirective extends MGMDirective {
+public class ToolGetDirective implements MGMDirective {
 
-    public ToolGetDirective() {
-        super("MGManager");
+    private final MGManager mgm;
+
+    public ToolGetDirective(MGManager mgm) {
+        this.mgm = mgm;
+    }
+
+    @Override @NotNull
+    public String getPlugin() {
+        return this.mgm.getName();
     }
 
     @Override
@@ -41,12 +49,12 @@ public class ToolGetDirective extends MGMDirective {
     }
 
     @Override
-    protected void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         sender.sendMessage(ChatColor.BLUE + "Gives you the MGMTool.");
     }
 
     @Override
-    protected String prototype() {
+    public String prototype() {
         return "/mgmtool get";
     }
 

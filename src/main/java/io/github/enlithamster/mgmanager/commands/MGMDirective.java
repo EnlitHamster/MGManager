@@ -11,18 +11,14 @@ import org.jetbrains.annotations.NotNull;
  * to a specific usage of the tool to avoid monoliths. Directives can be overloaded, but
  * registering order defines priority. MGManager directives take priority.
  */
-public abstract class MGMDirective {
-
-    public final String plugin;
+public interface MGMDirective {
 
     /**
      * The directive must define which plugin it refers to.
      *
-     * @param plugin Plugin name
+     * @return Plugin name
      */
-    protected MGMDirective(String plugin) {
-        this.plugin = plugin;
-    }
+    String getPlugin();
 
     /**
      * The implementation of the directive. It fits the <code>onCommand</code> signature. Return
@@ -36,7 +32,7 @@ public abstract class MGMDirective {
      * @param args    Passed command arguments
      * @return true if a valid command, otherwise false
      */
-    protected abstract boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
+    boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
 
     /**
      * The help entry of the directive. This is called whenever a user types <code>/[command] help [directive]</code>
@@ -47,7 +43,7 @@ public abstract class MGMDirective {
      * @param label   Alias of the command which was used
      * @param args    Passed command arguments
      */
-    protected abstract void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
+    void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
 
     /**
      * The function generates a String version of the command prototype to be shown when multiple executors are
@@ -55,6 +51,6 @@ public abstract class MGMDirective {
      *
      * @return command prototype
      */
-    protected abstract String prototype();
+    String prototype();
 
 }

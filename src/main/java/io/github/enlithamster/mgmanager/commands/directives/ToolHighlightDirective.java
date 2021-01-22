@@ -1,5 +1,6 @@
 package io.github.enlithamster.mgmanager.commands.directives;
 
+import io.github.enlithamster.mgmanager.MGManager;
 import io.github.enlithamster.mgmanager.Utils;
 import io.github.enlithamster.mgmanager.commands.MGMDirective;
 import io.github.enlithamster.mgmanager.managers.ToolManager;
@@ -15,13 +16,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class ToolHighlightDirective extends MGMDirective {
+public class ToolHighlightDirective implements MGMDirective {
 
-    private final ToolManager toolManager;
+    private final MGManager mgm;
 
-    public ToolHighlightDirective(ToolManager tm) {
-        super("MGManager");
-        this.toolManager = tm;
+    public ToolHighlightDirective(MGManager mgm) {
+        this.mgm = mgm;
+    }
+
+    @Override @NotNull
+    public String getPlugin() {
+        return this.mgm.getName();
     }
 
     @Override
@@ -29,7 +34,7 @@ public class ToolHighlightDirective extends MGMDirective {
         if (sender instanceof Player && args.length <= 1) {
             Player user = (Player) sender;
             if (user.hasPermission("mgm.tool.highlight")) {
-                Delimiter delimiter = this.toolManager.getAreaDelimiter(user);
+                Delimiter delimiter = this.mgm.getToolManager().getAreaDelimiter(user);
                 if (delimiter.isDefined()) {
                     Location loc1 = delimiter.getLoc1();
                     Location loc2 = delimiter.getLoc2();
@@ -52,12 +57,12 @@ public class ToolHighlightDirective extends MGMDirective {
     }
 
     @Override
-    protected void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         sender.sendMessage(ChatColor.BLUE + "Creates an highlighted area using either blue wool or the given material at the maximum height of the area.");
     }
 
     @Override
-    protected String prototype() {
+    public String prototype() {
         return "/mgmtool highlight [material]";
     }
 

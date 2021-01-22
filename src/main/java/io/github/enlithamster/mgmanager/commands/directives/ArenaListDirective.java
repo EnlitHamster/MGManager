@@ -1,27 +1,31 @@
 package io.github.enlithamster.mgmanager.commands.directives;
 
+import io.github.enlithamster.mgmanager.MGManager;
 import io.github.enlithamster.mgmanager.arena.MGMArena;
 import io.github.enlithamster.mgmanager.commands.MGMDirective;
-import io.github.enlithamster.mgmanager.managers.ArenaManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class ArenaListDirective extends MGMDirective {
+public class ArenaListDirective implements MGMDirective {
 
-    private final ArenaManager arenaMng;
+    private final MGManager mgm;
 
-    public ArenaListDirective(ArenaManager arenaMng) {
-        super("MGManager");
-        this.arenaMng = arenaMng;
+    public ArenaListDirective(MGManager mgm) {
+        this.mgm = mgm;
+    }
+
+    @Override @NotNull
+    public String getPlugin() {
+        return this.mgm.getName();
     }
 
     @Override
-    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 0) {
             sender.sendMessage(ChatColor.BLUE.toString() + ChatColor.BOLD.toString() + "Registered arenas");
-            this.arenaMng.forEach((String name, MGMArena arena) ->
+            this.mgm.getArenaManager().forEach((String name, MGMArena arena) ->
                     sender.sendMessage(ChatColor.BLUE + "- " + name + (arena.isRunning() ? ": running" : "")));
 
             return true;
@@ -31,12 +35,12 @@ public class ArenaListDirective extends MGMDirective {
     }
 
     @Override
-    protected void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public void usage(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
     }
 
     @Override
-    protected String prototype() {
+    public String prototype() {
         return null;
     }
 
