@@ -62,7 +62,11 @@ public class ToolManager {
     }
 
     public Delimiter getAreaDelimiter(@NotNull Player user) {
-        return this.playerAreaDelimiters.get(user);
+        try {
+            return this.playerAreaDelimiters.get(user);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     public void clearAreaDelimiter(@NotNull Player user) {
