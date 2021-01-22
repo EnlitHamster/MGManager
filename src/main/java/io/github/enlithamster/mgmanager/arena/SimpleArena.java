@@ -1,9 +1,14 @@
 package io.github.enlithamster.mgmanager.arena;
 
+import io.github.enlithamster.mgmanager.tool.Delimiter;
+
 public class SimpleArena extends MGMArena {
 
-    protected SimpleArena(String name) {
-        super(name);
+    private Delimiter area;
+
+    public SimpleArena(Delimiter area) {
+        super();
+        this.area = area;
     }
 
 }

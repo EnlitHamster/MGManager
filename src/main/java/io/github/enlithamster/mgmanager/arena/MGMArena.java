@@ -4,11 +4,8 @@ public abstract class MGMArena {
 
     private boolean running;
 
-    public final String name;
-
-    protected MGMArena(String name) {
+    public MGMArena() {
         this.running = false;
-        this.name = name;
     }
 
     public void start() {
