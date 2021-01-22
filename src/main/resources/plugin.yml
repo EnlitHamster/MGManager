@@ -12,3 +12,7 @@ commands:
     permission: mgm.tool
     usage: /[command] <directive>
     description: Tool command for MGManager
+  mgmarena:
+    permission: mgm.arena
+    usage: /[command] <directive>
+    description: Arena command for MGManager
