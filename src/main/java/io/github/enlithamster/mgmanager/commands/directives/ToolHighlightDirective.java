@@ -58,7 +58,7 @@ public class ToolHighlightDirective extends MGMDirective {
 
     @Override
     protected String prototype() {
-        return "/mgmtool highlight <material>";
+        return "/mgmtool highlight [material]";
     }
 
     private static void drawArena(Location loc1, Location loc2, int y, Material material) {
