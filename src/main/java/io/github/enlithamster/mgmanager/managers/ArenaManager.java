@@ -7,7 +7,7 @@ import io.github.enlithamster.mgmanager.commands.ArenaCommands;
 import io.github.enlithamster.mgmanager.commands.directives.ArenaCreateDirective;
 import io.github.enlithamster.mgmanager.commands.directives.ArenaListDirective;
 import io.github.enlithamster.mgmanager.tool.Delimiter;
-import io.github.enlithamster.mgmanager.tool.functors.ArenaFunctor;
+import io.github.enlithamster.mgmanager.functors.ArenaFunctor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -50,6 +50,6 @@ public class ArenaManager {
 
     public void forEach(ArenaFunctor functor) {
         for (String name : this.arenas.keySet())
-            functor.apply(name, this.arenas.get(name));
+            functor.apply(this.arenas.get(name));
     }
 }

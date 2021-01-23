@@ -1,7 +1,6 @@
 package io.github.enlithamster.mgmanager.commands.directives;
 
 import io.github.enlithamster.mgmanager.MGManager;
-import io.github.enlithamster.mgmanager.arena.MGMArena;
 import io.github.enlithamster.mgmanager.commands.MGMDirective;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -25,8 +24,8 @@ public class ArenaListDirective implements MGMDirective {
     public boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 0) {
             sender.sendMessage(ChatColor.BLUE.toString() + ChatColor.BOLD.toString() + "Registered arenas");
-            this.mgm.getArenaManager().forEach((String name, MGMArena arena) ->
-                    sender.sendMessage(ChatColor.BLUE + "- " + name + (arena.isRunning() ? ": running" : "")));
+            this.mgm.getArenaManager().forEach(arena ->
+                    sender.sendMessage(ChatColor.BLUE + "- " + arena.getName() + " :: " + (arena.isRunning() ? "running" : "not running")));
 
             return true;
         }
